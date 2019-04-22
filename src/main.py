@@ -1,6 +1,7 @@
 import sys
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import Qt
+from PyQt5.QtGui import QIcon
 
 # Subclass QMainWindow to customise your application's main window
 class Window(QMainWindow):
@@ -19,6 +20,7 @@ class Window(QMainWindow):
         self.add_left_comboBox()
         self.add_plus_label()
         self.add_right_comboBox()
+        self.add_open_file_button()
 
     def __init_data(self):
         '''
@@ -61,6 +63,18 @@ class Window(QMainWindow):
     def add_result_label(self):
         self.result_label = QLabel()
         self.grid.addWidget(self.result_label, 2, 1)
+    
+    def add_open_file_button(self):
+        self.open_file_button = QPushButton('open file')
+        self.grid.addWidget(self.open_file_button, 3, 1)
+        self.open_file_button.clicked.connect(self.show_open_file_dialog)
+    
+    def show_open_file_dialog(self):
+        options = QFileDialog.Options()
+        options |= QFileDialog.DontUseNativeDialog
+        fileName, _ = QFileDialog.getOpenFileName(self, 'QFileDialog.getOpenFileName()', '', 'All Files (*);;CSV (*.csv)', options=options)
+        if fileName:
+            print(fileName)
 
     def __combobox_clicked(self, val, name):
         if name == 'left':
@@ -68,6 +82,13 @@ class Window(QMainWindow):
         elif name == 'right':
             self.right = int(val)
         self.result_label.setText('{}'.format(self.left + self.right))
+    def __slot_open_file(self):
+        filename, _ = QFileDialog.getOpenFileName(self, 'Open File', '/home/yanbin/')
+    
+
+    def __slot_show_open_file_dialog(self):
+        fname = QFileDialog.getOpenFileName(self, 'Open file', '/home')
+        print(fname)
         
         
 
