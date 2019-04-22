@@ -8,53 +8,62 @@ class Window(QWidget):
     def __init__(self, *args, **kwargs):
         super(Window, self).__init__(*args, **kwargs)
 
-        self.init()
-
-        self.result = QLabel('')
-
         self.setWindowTitle("My Awesome App")
 
-        self.grid = QGridLayout()
-        self.grid.setSpacing(3)
+        self.__init_data()
 
-        self.cb = QComboBox()
-        self.cb2 = QComboBox()
-        self.cb.currentIndexChanged.connect(self.select)
-        self.cb2.currentIndexChanged.connect(self.select2)
+        # set layout
+        self.__layout()
 
-        self.grid.addWidget(self.cb, 0, 0)
-        self.grid.addWidget(QLabel('+'), 0, 1)
-        self.grid.addWidget(self.cb2, 0, 2)
-        self.grid.addWidget(self.result, 2, 1)
+        self.add_result_label()
+        self.add_left_comboBox()
+        self.add_plus_label()
+        self.add_right_comboBox()
 
-        self.setLayout(self.grid)
-
-
-        self.initCB()
-        self.initCB2()
-
-
-    def init(self):
+    def __init_data(self):
+        '''
+        init global datas for the app.
+        '''
+        self.ls = [str(i) for i in range(10)]
         self.left = 0
         self.right = 0
-        self.ls = [str(i) for i in range(10)]
 
-    def initCB(self):
-        self.cb.addItems(self.ls)
-        self.cb.currentIndexChanged.connect(self.select)
-    def initCB2(self):
-        self.cb2.addItems(self.ls)
-        self.cb2.currentIndexChanged.connect(self.select)
-    def select(self, i):
-        self.left = i
-        print(i)
-        self.onchange()
-    def select2(self, i):
-        self.right = i
-        print(i)
-        self.onchange()
-    def onchange(self):
-        self.result.setText('{}'.format(int(self.left) + int(self.right)))
+    def __layout(self):
+        self.grid = QGridLayout()
+        self.grid.setSpacing(20)
+        self.setLayout(self.grid)
+    
+    def add_plus_label(self):
+        self.grid.addWidget(QLabel('+'), 0, 1)
+
+    def add_left_comboBox(self):
+        self.left_combo_box = QComboBox()
+        self.grid.addWidget(self.left_combo_box, 0, 0)
+        self.left_combo_box.currentTextChanged.connect(
+            lambda i: self.__combobox_clicked(i, 'left')
+        )
+        self.left_combo_box.addItems(self.ls)
+    
+    def add_right_comboBox(self):
+        self.right_combo_box = QComboBox()
+        self.grid.addWidget(self.right_combo_box, 0, 2)
+        self.right_combo_box.currentTextChanged.connect(
+            lambda i: self.__combobox_clicked(i, 'right')
+        )
+        self.right_combo_box.addItems(self.ls)
+    
+    def add_result_label(self):
+        self.result_label = QLabel()
+        self.grid.addWidget(self.result_label, 2, 1)
+
+    def __combobox_clicked(self, val, name):
+        if name == 'left':
+            self.left = int(val)
+        elif name == 'right':
+            self.right = int(val)
+        self.result_label.setText('{}'.format(self.left + self.right))
+        
+        
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
