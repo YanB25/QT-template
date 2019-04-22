@@ -3,7 +3,7 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtCore import Qt
 
 # Subclass QMainWindow to customise your application's main window
-class Window(QWidget):
+class Window(QMainWindow):
 
     def __init__(self, *args, **kwargs):
         super(Window, self).__init__(*args, **kwargs)
@@ -29,10 +29,16 @@ class Window(QWidget):
         self.right = 0
 
     def __layout(self):
+        '''
+        set the global layout of the window.
+        window.setLayout is not valid, so add a middleware `main_frame`
+        '''
         self.grid = QGridLayout()
         self.grid.setSpacing(20)
-        self.setLayout(self.grid)
-    
+        main_frame = QWidget()
+        main_frame.setLayout(self.grid)
+        self.setCentralWidget(main_frame)    
+
     def add_plus_label(self):
         self.grid.addWidget(QLabel('+'), 0, 1)
 
