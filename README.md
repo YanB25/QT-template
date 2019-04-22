@@ -6,5 +6,5 @@ conda create -f environment.yml
 ## run
 ``` shell
 conda activate pyqt
-python main.py
+python src/main.py
 ```
