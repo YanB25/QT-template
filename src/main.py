@@ -2,6 +2,7 @@ import sys
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QIcon
+from components.plot_canvas import *
 
 # Subclass QMainWindow to customise your application's main window
 class Window(QMainWindow):
@@ -20,7 +21,10 @@ class Window(QMainWindow):
         self.add_left_comboBox()
         self.add_plus_label()
         self.add_right_comboBox()
+
         self.add_open_file_button()
+
+        self.add_matplotlib_figure()
 
     def __init_data(self):
         '''
@@ -75,6 +79,10 @@ class Window(QMainWindow):
         fileName, _ = QFileDialog.getOpenFileName(self, 'QFileDialog.getOpenFileName()', '', 'All Files (*);;CSV (*.csv)', options=options)
         if fileName:
             print(fileName)
+    
+    def add_matplotlib_figure(self):
+        self.figure = PlotCanvas(self)
+        self.grid.addWidget(self.figure, 5, 1)
 
     def __combobox_clicked(self, val, name):
         if name == 'left':
