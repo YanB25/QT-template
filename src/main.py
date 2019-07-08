@@ -21,6 +21,8 @@ class Window(QMainWindow):
         self.add_left_comboBox()
         self.add_plus_label()
         self.add_right_comboBox()
+        
+        self.add_inputbox()
 
         self.add_open_file_button()
 
@@ -67,6 +69,14 @@ class Window(QMainWindow):
     def add_result_label(self):
         self.result_label = QLabel()
         self.grid.addWidget(self.result_label, 2, 1)
+
+    def add_inputbox(self):
+        self.middle_inputbox = QLineEdit()
+        self.grid.addWidget(self.middle_inputbox, 1, 1)
+        # below first one handle the `Enter` pressed.
+        # the second one handle when content changed.
+        # self.middle_inputbox.returnPressed.connect(self.__middle_inputbox_pressed)
+        self.middle_inputbox.textChanged.connect(self.__middle_inputbox_pressed)
     
     def add_open_file_button(self):
         self.open_file_button = QPushButton('open file')
@@ -97,6 +107,9 @@ class Window(QMainWindow):
     def __slot_show_open_file_dialog(self):
         fname = QFileDialog.getOpenFileName(self, 'Open file', '/home')
         print(fname)
+
+    def __middle_inputbox_pressed(self):
+        print('INPUT BOX GET: {}'.format(self.middle_inputbox.text()))
         
         
 
