@@ -1,0 +1,12 @@
+version: '2'
+services:
+    datascience-notebook:
+        user: root
+        image: jupyter/base-notebook:latest
+        volumes:
+            - /Users/yanbin/Documents/Projects/qt-template:/home/jovyan/work
+            - /Users/yanbin/docker-volumn/jupyter-conda/conda:/opt/conda
+        ports:
+            - "32769:8888"
+        environment:
+            - 'GRANT_SUDO=yes'
