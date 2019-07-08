@@ -23,6 +23,7 @@ class Window(QMainWindow):
         self.add_right_comboBox()
         
         self.add_inputbox()
+        self.add_new_dialog_button()
 
         self.add_open_file_button()
 
@@ -82,6 +83,11 @@ class Window(QMainWindow):
         self.open_file_button = QPushButton('open file')
         self.grid.addWidget(self.open_file_button, 3, 1)
         self.open_file_button.clicked.connect(self.show_open_file_dialog)
+
+    def add_new_dialog_button(self):
+        self.new_dialog_button = QPushButton('new dialog')
+        self.grid.addWidget(self.new_dialog_button, 4, 1)
+        self.new_dialog_button.clicked.connect(self.__show_new_dialog)
     
     def show_open_file_dialog(self):
         options = QFileDialog.Options()
@@ -89,6 +95,7 @@ class Window(QMainWindow):
         fileName, _ = QFileDialog.getOpenFileName(self, 'QFileDialog.getOpenFileName()', '', 'All Files (*);;CSV (*.csv)', options=options)
         if fileName:
             print(fileName)
+
     
     def add_matplotlib_figure(self):
         self.figure = PlotCanvas(self)
@@ -110,6 +117,9 @@ class Window(QMainWindow):
 
     def __middle_inputbox_pressed(self):
         print('INPUT BOX GET: {}'.format(self.middle_inputbox.text()))
+
+    def __show_new_dialog(self):
+        QMessageBox.about(self, "Title", "You click me!")
         
         
 
