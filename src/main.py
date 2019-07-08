@@ -2,7 +2,7 @@ import sys
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QIcon
-from components.plot_canvas import *
+from components.plot_canvas import PlotCanvas
 
 # Subclass QMainWindow to customise your application's main window
 class Window(QMainWindow):
