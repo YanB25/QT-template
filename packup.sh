@@ -1,0 +1,1 @@
+zip -r 202005195-yanbin.zip *
