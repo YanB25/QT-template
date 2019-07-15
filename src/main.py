@@ -1,7 +1,7 @@
 import sys
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QIcon
+from PyQt5.QtGui import QIcon, QPixmap
 from components.plot_canvas import PlotCanvas
 
 # Subclass QMainWindow to customise your application's main window
@@ -28,6 +28,8 @@ class Window(QMainWindow):
         self.add_open_file_button()
 
         self.add_matplotlib_figure()
+
+        self.add_local_image()
 
     def __init_data(self):
         '''
@@ -100,6 +102,14 @@ class Window(QMainWindow):
     def add_matplotlib_figure(self):
         self.figure = PlotCanvas(self)
         self.grid.addWidget(self.figure, 5, 1)
+    
+    def add_local_image(self):
+        self.image_label = QLabel()
+        pixmap = QPixmap('example.png')
+        pixmap = pixmap.scaled(64, 64)
+        self.image_label.setPixmap(pixmap)
+        self.grid.addWidget(self.image_label, 10, 1)
+        print(self.image_label.width())
 
     def __combobox_clicked(self, val, name):
         if name == 'left':
