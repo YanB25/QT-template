@@ -3,6 +3,7 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QIcon, QPixmap
 from components.plot_canvas import PlotCanvas
+from components.demo import ComboxDemo
 
 # Subclass QMainWindow to customise your application's main window
 class Window(QMainWindow):
@@ -27,9 +28,11 @@ class Window(QMainWindow):
 
         self.add_open_file_button()
 
-        self.add_matplotlib_figure()
+        # self.add_matplotlib_figure()
 
-        self.add_local_image()
+        # self.add_local_image()
+
+        self.add_combox_demo()
 
     def __init_data(self):
         '''
@@ -110,6 +113,10 @@ class Window(QMainWindow):
         self.image_label.setPixmap(pixmap)
         self.grid.addWidget(self.image_label, 10, 1)
         print(self.image_label.width())
+    
+    def add_combox_demo(self):
+        self.combox_demo = ComboxDemo()
+        self.grid.addWidget(self.combox_demo, 6, 1)
 
     def __combobox_clicked(self, val, name):
         if name == 'left':
