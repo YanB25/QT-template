@@ -12,7 +12,8 @@ import numpy as np
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 
 class PlotCanvas(FigureCanvas):
-    def __init__(self, parent=None, width=4, height=3):
+    def __init__(self, parent=None, width=12, height=9):
+    # def __init__(self, parent=None, width=4, height=3):
         fig = Figure(figsize=(width, height))
 
         FigureCanvas.__init__(self, fig)
@@ -36,7 +37,7 @@ class PlotCanvas(FigureCanvas):
         # ax.plot(data, 'r+')
         # ax.set_title('hello')
 
-        ax = self.figure.add_subplot(1, 1, 1)
+        ax = self.figure.add_subplot(2, 1, 1)
         data = pd.DataFrame()
         x = np.random.randint(0, 100, (100,))
         y = np.random.randint(0, 100, (100,))
@@ -46,5 +47,18 @@ class PlotCanvas(FigureCanvas):
         data['gender'] = gender
         sns.relplot(data=data, x='x', y='y', style='gender', hue='gender', ax=ax)
         ax.set_title('example using seaborn')
+        ax.set_ylabel('this is y label')
+        # self.draw()
+
+        ax = self.figure.add_subplot(2, 1, 2)
+        data = pd.DataFrame()
+        x = np.random.randint(0, 100, (100,))
+        y = np.random.randint(0, 100, (100,))
+        gender = np.random.choice(['Male', 'Female'], (100, ))
+        data['time'] = x
+        data['value'] = y
+        data['gender'] = gender
+        sns.relplot(data=data, x='time', y='value', style='gender', hue='gender', ax=ax, kind='line')
+        ax.set_ylabel('this is y label')
         self.draw()
 
